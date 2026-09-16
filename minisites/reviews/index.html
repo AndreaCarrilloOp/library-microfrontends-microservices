@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Reviews | Library Catalog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+</head>
+<body>
+<main class="page" x-data="reviewsApp()" x-init="init()" x-cloak>
+  <section x-show="view === 'list'">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Catalog</p>
+        <h1 class="page-title">Reviews</h1>
+        <p class="page-intro">Reader ratings and comments for books in the collection.</p>
+      </div>
+    </header>
+
+    <p x-show="bookFilter" class="notice">Showing reviews for book <strong x-text="bookFilter"></strong>.</p>
+    <p x-show="error" x-text="error" class="error"></p>
+
+    <div class="empty-state" x-show="filteredReviews().length === 0 && !error">No reviews found.</div>
+
+    <div class="review-list">
+      <template x-for="r in filteredReviews()" :key="r.id">
+        <article class="review-card">
+          <h2 x-text="r.book_title"></h2>
+          <div class="rating" x-text="stars(r.rating)" :aria-label="r.rating + ' out of 5 stars'"></div>
+          <p class="reviewer" x-text="r.reviewer"></p>
+          <p x-text="r.comment"></p>
+          <a class="detail-link" href="#" @click.prevent="location.hash = '/show/' + r.id">View detail</a>
+        </article>
+      </template>
+    </div>
+
+    <div class="action-row" x-show="bookFilter">
+      <a class="button button-primary" href="#" @click.prevent="location.hash = '/'">All reviews</a>
+    </div>
+  </section>
+
+  <section x-show="view === 'detail'">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Review detail</p>
+        <h1 class="page-title" x-text="review.book_title"></h1>
+      </div>
+    </header>
+
+    <p x-show="error" x-text="error" class="error"></p>
+
+    <div class="detail-panel">
+      <dl class="detail-grid">
+        <div class="detail-item"><dt>ID</dt><dd x-text="review.id"></dd></div>
+        <div class="detail-item"><dt>Book ID</dt><dd x-text="review.book_id"></dd></div>
+        <div class="detail-item"><dt>Reviewer</dt><dd x-text="review.reviewer"></dd></div>
+        <div class="detail-item"><dt>Rating</dt><dd class="rating" x-text="stars(review.rating)"></dd></div>
+      </dl>
+      <section class="subsection">
+        <h2 class="subsection-heading">Comment</h2>
+        <p x-text="review.comment"></p>
+      </section>
+    </div>
+
+    <div class="action-row">
+      <a class="button button-primary" :href="booksMinisite + '/#/show/' + review.book_id">View book</a>
+      <a class="button" href="#" @click.prevent="location.hash = '/'">Back to reviews</a>
+    </div>
+  </section>
+</main>
+
+<script>
+const reviewsApi = 'https://REPLACE_REVIEWS_BACKEND_URL'
+const booksMinisite = 'https://REPLACE_BOOKS_MINISITE_URL'
+function reviewsApp() {
+  return {
+    view: 'list', reviews: [], review: { id:'', book_id:'', book_title:'', reviewer:'', rating:0, comment:'' },
+    bookFilter: '', booksMinisite, error: '',
+    init() { this.allReviews(); this.route(); window.addEventListener('hashchange', () => this.route()) },
+    route() {
+      const hash = location.hash.replace(/^#/, '') || '/'
+      let m = hash.match(/^\/show\/(.+)$/)
+      if (m) { this.view = 'detail'; this.bookFilter = ''; this.findReview(m[1]); return }
+      m = hash.match(/^\/book\/(.+)$/)
+      this.view = 'list'; this.bookFilter = m ? m[1] : ''
+    },
+    async allReviews() {
+      try {
+        const r = await fetch(reviewsApi + '/api/reviews', { headers: { Accept: 'application/json' } })
+        if (!r.ok) throw new Error('Unable to load reviews')
+        this.reviews = await r.json()
+      } catch (e) { this.error = e.message }
+    },
+    async findReview(id) {
+      try {
+        const r = await fetch(reviewsApi + '/api/reviews/' + id, { headers: { Accept: 'application/json' } })
+        if (!r.ok) throw new Error('Review not found')
+        this.review = await r.json()
+      } catch (e) { this.error = e.message }
+    },
+    filteredReviews() { return this.bookFilter ? this.reviews.filter(r => String(r.book_id) === String(this.bookFilter)) : this.reviews },
+    stars(n) { const x = Math.max(0, Math.min(5, Number(n) || 0)); return '★'.repeat(x) + '☆'.repeat(5-x) }
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "authors-microservice",
+  "version": "1.0.0",
+  "description": "Tutorial 6 - Cloudflare Workers + D1",
+  "scripts": { "dev": "wrangler dev --port 8788", "deploy": "wrangler deploy" },
+  "devDependencies": { "wrangler": "^4.125.0" }
+}

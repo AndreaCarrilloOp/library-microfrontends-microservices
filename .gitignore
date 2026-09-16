@@ -1,0 +1,25 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+
+# Providers
+.netlify/
+.vercel/
+.wrangler/
+
+# Build output
+dist/
+build/
+.output/
+.nuxt/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/

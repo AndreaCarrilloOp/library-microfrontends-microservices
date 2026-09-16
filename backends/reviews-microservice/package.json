@@ -1,0 +1,14 @@
+{
+  "name": "reviews-microservice",
+  "version": "1.0.0",
+  "description": "Tarea 3 - backend adicional siguiendo Netlify Functions + Neon",
+  "scripts": {
+    "dev": "netlify dev --port 8790"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^27.7.0"
+  }
+}

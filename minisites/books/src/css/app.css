@@ -1,0 +1,292 @@
+:root {
+  --paper: #f2ead8;
+  --paper-light: #fbf7ed;
+  --ink: #302820;
+  --muted: #756b5d;
+  --rule: #b8a98c;
+  --accent: #6b4f32;
+  --accent-dark: #493722;
+  --olive: #5f6248;
+  --danger: #8a3f32;
+}
+
+* { box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper-light);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+[x-cloak] { display: none !important; }
+
+.page {
+  width: min(94vw, 1320px);
+  margin: 0 auto;
+  padding: clamp(3rem, 5vw, 6rem) 0 5rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 2.4rem;
+  padding-bottom: 1.3rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.eyebrow {
+  margin: 0 0 .45rem;
+  color: var(--olive);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(3.2rem, 5vw, 5.2rem);
+  font-weight: 500;
+  letter-spacing: -.035em;
+  line-height: 1.05;
+}
+
+.page-intro {
+  max-width: 52rem;
+  margin: .7rem 0 0;
+  color: var(--muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.45rem;
+}
+
+.record-list,
+.related-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.record-row,
+.related-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem;
+  align-items: center;
+  margin: 0;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.record-link,
+.related-link {
+  color: var(--ink);
+  font-size: 1.9rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.record-link:hover,
+.related-link:hover { color: var(--accent); }
+
+.record-meta,
+.related-actions,
+.meta {
+  color: var(--muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.25rem;
+}
+
+.related-actions {
+  display: flex;
+  gap: 1rem;
+  white-space: nowrap;
+}
+
+.related-actions a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.detail-panel {
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 2.2rem 0;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+}
+
+.detail-item {
+  min-height: 8.8rem;
+  margin: 0;
+  padding: 1.4rem 1.6rem;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.detail-item:nth-child(4n) { border-right: 0; }
+.detail-item:nth-last-child(-n + 4) { border-bottom: 0; }
+
+.detail-item dt {
+  margin-bottom: .45rem;
+  color: var(--muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.detail-item dd {
+  margin: 0;
+  font-size: 1.7rem;
+  line-height: 1.35;
+}
+
+.detail-item a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.subsection {
+  margin-top: 3rem;
+}
+
+.subsection-heading {
+  margin: 0 0 1rem;
+  font-size: 2.1rem;
+  font-weight: 500;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .8rem;
+  margin-top: 2.6rem;
+}
+
+.button,
+button {
+  margin: 0;
+  border-radius: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.button.button-primary,
+button.button-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--paper-light);
+}
+
+.button.button-primary:hover,
+button.button-primary:hover {
+  border-color: var(--accent-dark);
+  background: var(--accent-dark);
+  color: var(--paper-light);
+}
+
+.button:not(.button-primary) {
+  border-color: var(--rule);
+  color: var(--ink);
+}
+
+.button:not(.button-primary):hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.notice {
+  margin: 0 0 2rem;
+  padding: 1.2rem 1.4rem;
+  border-left: 3px solid var(--olive);
+  background: var(--paper);
+  color: var(--muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.3rem;
+}
+
+.error {
+  margin: 0 0 2rem;
+  padding: 1.2rem 1.4rem;
+  border-left: 3px solid var(--danger);
+  background: #f7e8df;
+  color: var(--danger);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}
+
+.review-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.4rem;
+}
+
+.review-card {
+  display: flex;
+  min-height: 20rem;
+  flex-direction: column;
+  margin: 0;
+  padding: 2rem;
+  border: 1px solid var(--rule);
+  background: var(--paper-light);
+}
+
+.review-card h2 {
+  margin: 0 0 .7rem;
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+
+.review-card p { margin: .7rem 0; }
+.review-card .reviewer { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 1.25rem; }
+.review-card .detail-link { margin-top: auto; padding-top: 1rem; color: var(--accent); font-family: Arial, Helvetica, sans-serif; font-weight: 700; text-decoration: none; }
+
+.rating {
+  color: var(--accent);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: .12em;
+}
+
+.empty-state {
+  padding: 2rem 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  color: var(--muted);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@media (max-width: 900px) {
+  .detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .detail-item:nth-child(4n) { border-right: 1px solid var(--rule); }
+  .detail-item:nth-child(2n) { border-right: 0; }
+  .detail-item:nth-last-child(-n + 4) { border-bottom: 1px solid var(--rule); }
+  .detail-item:nth-last-child(-n + 2) { border-bottom: 0; }
+  .review-list { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 620px) {
+  .page { width: min(92vw, 1320px); }
+  .page-header { align-items: flex-start; flex-direction: column; }
+  .record-row, .related-row { grid-template-columns: 1fr; gap: .6rem; }
+  .related-actions { white-space: normal; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .detail-item,
+  .detail-item:nth-child(2n),
+  .detail-item:nth-child(4n),
+  .detail-item:nth-last-child(-n + 4) { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .detail-item:last-child { border-bottom: 0; }
+}

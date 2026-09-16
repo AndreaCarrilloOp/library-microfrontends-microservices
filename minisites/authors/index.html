@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Authors | Library Catalog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+</head>
+<body>
+<main class="page" x-data="authorsApp()" x-init="init()" x-cloak>
+  <section x-show="view === 'list'">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Catalog</p>
+        <h1 class="page-title">Authors</h1>
+        <p class="page-intro">Browse authors represented in the collection.</p>
+      </div>
+    </header>
+
+    <p x-show="error" x-text="error" class="error"></p>
+
+    <ul class="record-list">
+      <template x-for="a in authors" :key="a.id">
+        <li class="record-row">
+          <a class="record-link" href="#" @click.prevent="location.hash = '/show/' + a.id" x-text="a.author"></a>
+          <span class="record-meta" x-text="a.nationality || 'Author record'"></span>
+        </li>
+      </template>
+    </ul>
+  </section>
+
+  <section x-show="view === 'detail'">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Author detail</p>
+        <h1 class="page-title" x-text="author.author"></h1>
+      </div>
+    </header>
+
+    <p x-show="error" x-text="error" class="error"></p>
+
+    <div class="detail-panel">
+      <dl class="detail-grid">
+        <div class="detail-item"><dt>ID</dt><dd x-text="author.id"></dd></div>
+        <div class="detail-item"><dt>Nationality</dt><dd x-text="author.nationality"></dd></div>
+        <div class="detail-item"><dt>Birth year</dt><dd x-text="author.birth_year"></dd></div>
+        <div class="detail-item"><dt>Fields</dt><dd x-text="author.fields"></dd></div>
+      </dl>
+    </div>
+
+    <section class="subsection" x-show="author.books && author.books.length">
+      <h2 class="subsection-heading">Books</h2>
+      <ul class="related-list">
+        <template x-for="b in author.books" :key="b.book_id">
+          <li class="related-row">
+            <a class="related-link" :href="booksMinisite + '/#/show/' + b.book_id" x-text="b.title"></a>
+            <span class="related-actions"><a :href="reviewsMinisite + '/#/book/' + b.book_id">Reviews</a></span>
+          </li>
+        </template>
+      </ul>
+    </section>
+
+    <div class="action-row">
+      <a class="button button-primary" href="#" @click.prevent="location.hash = '/'">Back to authors</a>
+    </div>
+  </section>
+</main>
+
+<script>
+const authorsApi = 'https://REPLACE_AUTHORS_BACKEND_URL'
+const booksMinisite = 'https://REPLACE_BOOKS_MINISITE_URL'
+const reviewsMinisite = 'https://REPLACE_REVIEWS_MINISITE_URL'
+
+function authorsApp() {
+  return {
+    view: 'list', authors: [], author: { id:'', author:'', nationality:'', birth_year:'', fields:'', books:[] },
+    booksMinisite, reviewsMinisite, error: '',
+    init() {
+      this.allAuthors(); this.route();
+      window.addEventListener('hashchange', () => this.route())
+    },
+    route() {
+      const hash = location.hash.replace(/^#/, '') || '/'
+      const match = hash.match(/^\/show\/(.+)$/)
+      if (match) { this.view = 'detail'; this.findAuthor(match[1]) }
+      else { this.view = 'list' }
+    },
+    async allAuthors() {
+      try {
+        const r = await fetch(authorsApi + '/api/authors', { headers: { Accept: 'application/json' } })
+        if (!r.ok) throw new Error('Unable to load authors')
+        this.authors = await r.json()
+      } catch (e) { this.error = e.message }
+    },
+    async findAuthor(id) {
+      try {
+        const r = await fetch(authorsApi + '/api/authors/' + id, { headers: { Accept: 'application/json' } })
+        if (!r.ok) throw new Error('Author not found')
+        this.author = await r.json()
+      } catch (e) { this.error = e.message }
+    }
+  }
+}
+</script>
+</body>
+</html>

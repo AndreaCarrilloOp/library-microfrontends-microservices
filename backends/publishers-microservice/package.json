@@ -1,0 +1,9 @@
+{
+  "name": "publishers-microservice",
+  "version": "1.0.0",
+  "description": "Tutorial 6 - Vercel Functions + Turso",
+  "type": "module",
+  "scripts": { "dev": "vercel dev --listen 8790" },
+  "dependencies": { "@libsql/client": "^0.14.0" },
+  "devDependencies": { "vercel": "^39.1.0" }
+}

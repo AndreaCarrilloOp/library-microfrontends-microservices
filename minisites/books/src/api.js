@@ -1,5 +1,5 @@
 // Backend de libros (Netlify Functions + Neon), Tutorial 6.
-export const booksApi = 'https://REPLACE_BOOKS_BACKEND_URL'
+export const booksApi = 'https://book-microservice.netlify.app'
 
 // Mini-sitios publicados. Reemplace estas URLs al desplegar.
 export const authorsMinisite = 'https://REPLACE_AUTHORS_MINISITE_URL'

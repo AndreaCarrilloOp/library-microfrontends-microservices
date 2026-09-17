@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Tutorial 6 - Vercel Functions + Turso",
   "type": "module",
-  "scripts": { "dev": "vercel dev --listen 8790" },
+  "scripts": { "local": "vercel dev --port 8790" },
   "dependencies": { "@libsql/client": "^0.14.0" },
-  "devDependencies": { "vercel": "^39.1.0" }
+  "devDependencies": { "vercel": "^59.20.0" }
 }

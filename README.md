@@ -90,7 +90,7 @@ The application shell loads each published microfrontend inside the same `iframe
 The visual design keeps the tutorial structure simple and minimal while using a restrained vintage-library palette and responsive layouts.
 
 ### Preview screenshot
-![Preview microfrontends home]( preview.png)
+![Preview microfrontends home](Preview.png)
 ---
 
 This repository is an **academic project** developed to demonstrate distributed web architecture using microfrontends and microservices.

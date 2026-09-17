@@ -68,9 +68,10 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const { createApp, reactive } = PetiteVue
-  const publishersApi = 'https://publisher-microfrontend.vercel.app'
+  const publishersApi = 'https://publishers-microservice.vercel.app'
   const booksMinisite = 'https://book-microfrontend.netlify.app'
-  const reviewsMinisite = 'https://REPLACE_REVIEWS_MINISITE_URL'
+  const reviewsMinisite = 
+  'https://AndreaCarrilloOp.github.io/library-microfrontends-microservices/microfrontends/reviews'
   const state = reactive({
     view: 'list', publishers: [], publisher: { id:'', publisher:'', country:'', founded:'', genere:'', books:[] }, error: ''
   })
